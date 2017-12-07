@@ -25,6 +25,7 @@ import static com.aospextended.launcher.OverlayCallbackImpl.KEY_ENABLE_MINUS_ONE
 
 import com.android.launcher3.customization.IconDatabase;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.ComponentName;
@@ -221,6 +222,7 @@ public class SettingsActivity extends Activity
             switch (preference.getKey()) {
                 case NOTIFICATION_DOTS_PREFERENCE_KEY:
                     if (!Utilities.ATLEAST_OREO ||
+                            getContext().getSystemService(ActivityManager.class).isLowRamDevice() ||
                             !getResources().getBoolean(R.bool.notification_dots_enabled)) {
                         return false;
                     }

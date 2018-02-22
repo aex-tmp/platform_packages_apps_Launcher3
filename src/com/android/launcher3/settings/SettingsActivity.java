@@ -62,6 +62,7 @@ import androidx.preference.PreferenceFragment.OnPreferenceStartFragmentCallback;
 import androidx.preference.PreferenceFragment.OnPreferenceStartScreenCallback;
 import androidx.preference.PreferenceGroup.PreferencePositionCallback;
 import androidx.preference.PreferenceScreen;
+import androidx.preference.TwoStatePreference;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -310,6 +311,18 @@ public class SettingsActivity extends Activity
                         }
                     });
                     return true;
+
+                case Utilities.BOTTOM_SEARCH_BAR_KEY:
+                    final TwoStatePreference showBottomSearchBar = (TwoStatePreference)
+                            findPreference(Utilities.BOTTOM_SEARCH_BAR_KEY);
+                    showBottomSearchBar.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                        public boolean onPreferenceChange(Preference preference, Object newValue) {
+                            LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+                            return true;
+                        }
+                    });
+                    return true;
+
             }
             return true;
         }

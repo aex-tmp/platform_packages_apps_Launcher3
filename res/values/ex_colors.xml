@@ -23,7 +23,10 @@
     <color name="app_info_bottom_sheet_bg">@*android:color/primary_device_default_dark</color>
 
     <!-- QSB -->
-    <color name="qsb_drawer_text_color_normal">#ff212121</color>
-    <color name="qsb_background_default">#ccffffff</color>
-    <color name="qsb_background_default_dark">#99fafafa</color>
+    <color name="qsb_background_hotseat_default">#99fafafa</color>
+    <color name="qsb_background_hotseat_white">#ccffffff</color>
+    <color name="qsb_background_hotseat_dark">#cc444444</color>
+    <color name="qsb_background_drawer_default">@*android:color/primary_device_default_light</color>
+    <color name="qsb_background_drawer_dark">@*android:color/primary_device_default_light</color>
+    <color name="qsb_drawer_text_color">#ff212121</color>
 </resources>

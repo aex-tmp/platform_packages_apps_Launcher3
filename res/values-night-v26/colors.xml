@@ -19,4 +19,7 @@
 -->
 <resources>
     <color name="app_info_bottom_sheet_bg">@*android:color/primary_device_default_dark</color>
+
+    <color name="qsb_background_drawer_default">@*android:color/secondary_device_default_dark</color>
+    <color name="qsb_background_drawer_dark">@*android:color/secondary_device_default_dark</color>
 </resources>

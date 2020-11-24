@@ -201,6 +201,16 @@ public class SettingsActivity extends Activity
 
             // For each PreferenceCategory
             PreferenceScreen screen = getPreferenceScreen();
+            Preference trustApps = findPreference(KEY_TRUST_APPS);
+            trustApps.setOnPreferenceClickListener(p -> {
+                LineageUtils.showLockScreen(getActivity(),
+                        getString(R.string.trust_apps_manager_name), () -> {
+                    Intent intent = new Intent(getActivity(), TrustAppsActivity.class);
+                    startActivity(intent);
+                });
+                return true;
+            });
+
             for (int i = screen.getPreferenceCount() - 1; i >= 0; i--) {
                 PreferenceCategory category = (PreferenceCategory) screen.getPreference(i);
                 // For each preference inside a category
@@ -278,14 +288,16 @@ public class SettingsActivity extends Activity
                     return true;
 
                 case KEY_TRUST_APPS:
-                    preference.setOnPreferenceClickListener(p -> {
+                    /*preference.setOnPreferenceClickListener(p -> {
                         LineageUtils.showLockScreen(getActivity(),
                                 getString(R.string.trust_apps_manager_name), () -> {
                             Intent intent = new Intent(getActivity(), TrustAppsActivity.class);
                             startActivity(intent);
                         });
                         return true;
-                    });
+                    });*/
+                    return true;
+
                 case KEY_ICON_PACK:
                     ReloadingListPreference icons = (ReloadingListPreference) findPreference(KEY_ICON_PACK);
                     icons.setValue(IconDatabase.getGlobal(mContext));
@@ -322,6 +334,17 @@ public class SettingsActivity extends Activity
                     final TwoStatePreference showBottomSearchBar = (TwoStatePreference)
                             findPreference(Utilities.BOTTOM_SEARCH_BAR_KEY);
                     showBottomSearchBar.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                        public boolean onPreferenceChange(Preference preference, Object newValue) {
+                            LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+                            return true;
+                        }
+                    });
+                    return true;
+
+                case Utilities.KEY_ALL_APPS_BACKGROUND_ALPHA:
+                    final CustomSeekBarPreference allAppsAlpha = (CustomSeekBarPreference)
+                            findPreference(Utilities.KEY_ALL_APPS_BACKGROUND_ALPHA);
+                    allAppsAlpha.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                         public boolean onPreferenceChange(Preference preference, Object newValue) {
                             LauncherAppState.getInstanceNoCreate().setNeedsRestart();
                             return true;

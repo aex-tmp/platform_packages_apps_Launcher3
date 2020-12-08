@@ -55,6 +55,7 @@ import com.android.launcher3.settings.preference.CustomSeekBarPreference;
 
 import androidx.preference.DropDownPreference;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.PreferenceFragment.OnPreferenceStartFragmentCallback;
@@ -195,11 +196,16 @@ public class SettingsActivity extends Activity
             getPreferenceManager().setSharedPreferencesName(LauncherFiles.SHARED_PREFERENCES_KEY);
             setPreferencesFromResource(R.xml.launcher_preferences, rootKey);
 
+            // For each PreferenceCategory
             PreferenceScreen screen = getPreferenceScreen();
             for (int i = screen.getPreferenceCount() - 1; i >= 0; i--) {
-                Preference preference = screen.getPreference(i);
-                if (!initPreference(preference)) {
-                    screen.removePreference(preference);
+                PreferenceCategory category = (PreferenceCategory) screen.getPreference(i);
+                // For each preference inside a category
+                for (int j = category.getPreferenceCount() - 1; j >= 0; j--) {
+                    Preference preference = category.getPreference(j);
+                    if (!initPreference(preference)) {
+                        screen.removePreference(preference);
+                    }
                 }
             }
         }

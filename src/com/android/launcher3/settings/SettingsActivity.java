@@ -50,6 +50,7 @@ import com.android.launcher3.lineage.LineageUtils;
 import com.android.launcher3.lineage.trust.TrustAppsActivity;
 import com.android.launcher3.uioverrides.plugins.PluginManagerWrapper;
 import com.android.launcher3.util.SecureSettingsObserver;
+import com.android.launcher3.settings.preference.CustomSeekBarPreference;
 
 import androidx.preference.DropDownPreference;
 import androidx.preference.Preference;
@@ -281,13 +282,11 @@ public class SettingsActivity extends Activity
                         return true;
                     });
                 case Utilities.ICON_SIZE:
-                    final DropDownPreference iconSizes = (DropDownPreference) findPreference(Utilities.ICON_SIZE);
-                    iconSizes.setSummary(iconSizes.getEntry());
+                    final CustomSeekBarPreference iconSizes = (CustomSeekBarPreference)
+                            findPreference(Utilities.ICON_SIZE);
                     iconSizes.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                         public boolean onPreferenceChange(Preference preference, Object newValue) {
-                            int index = iconSizes.findIndexOfValue((String) newValue);
-                            iconSizes.setSummary(iconSizes.getEntries()[index]);
-                            Utilities.restart(getActivity());
+                            LauncherAppState.getInstanceNoCreate().setNeedsRestart();
                             return true;
                         }
                     });

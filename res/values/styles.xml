@@ -30,8 +30,8 @@
     </style>
 
     <style name="LauncherTheme" parent="@style/BaseLauncherTheme">
-        <item name="allAppsScrimColor">#CCFFFFFF</item> <!-- 80% White -->
-        <item name="allAppsScrimBlurDisabledColor">#E6FFFFFF</item> <!-- 90% White -->
+        <item name="allAppsScrimColor">@*android:color/primary_device_default_light</item>
+        <item name="allAppsScrimBlurDisabledColor">@*android:color/primary_device_default_light</item>
         <item name="allAppsInterimScrimAlpha">46</item>
         <item name="allAppsNavBarScrimColor">#66FFFFFF</item>
         <item name="allAppsTheme">@style/AllAppsTheme</item>
@@ -95,7 +95,7 @@
         <item name="android:colorControlHighlight">#A0FFFFFF</item>
         <item name="android:colorPrimary">@*android:color/secondary_device_default_dark</item>
         <item name="allAppsScrimColor">@*android:color/primary_device_default_dark</item>
-        <item name="allAppsScrimBlurDisabledColor">#e2000000</item>
+        <item name="allAppsScrimBlurDisabledColor">@*android:color/primary_device_default_dark</item>
         <item name="allAppsInterimScrimAlpha">102</item>
         <item name="allAppsNavBarScrimColor">#80000000</item>
         <item name="allAppsTheme">@style/AllAppsTheme.Dark</item>

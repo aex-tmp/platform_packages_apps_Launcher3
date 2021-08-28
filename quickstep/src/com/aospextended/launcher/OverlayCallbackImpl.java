@@ -17,12 +17,15 @@
 package com.aospextended.launcher;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 
 import com.android.launcher3.Launcher;
 import com.android.launcher3.Utilities;
+import com.android.launcher3.util.SimpleBroadcastReceiver;
+
 import com.android.systemui.plugins.shared.LauncherOverlayManager;
 import com.android.systemui.plugins.shared.LauncherOverlayManager.LauncherOverlay;
 
@@ -54,6 +57,11 @@ public class OverlayCallbackImpl
 
     private QsbAnimationController mQsbController;
 
+    private boolean mAttached = false;
+
+    private final SimpleBroadcastReceiver mWallpaperChangeReceiver =
+            new SimpleBroadcastReceiver(this::onWallpaperChanged);
+
     public OverlayCallbackImpl(Launcher launcher) {
         SharedPreferences prefs = Utilities.getPrefs(launcher);
 
@@ -78,12 +86,25 @@ public class OverlayCallbackImpl
 
     @Override
     public void onAttachedToWindow() {
+        if (!mAttached) {
+            mAttached = true;
+            mWallpaperChangeReceiver.register(mLauncher, Intent.ACTION_WALLPAPER_CHANGED);
+        }
         mClient.onAttachedToWindow();
     }
 
     @Override
     public void onDetachedFromWindow() {
+        if (mAttached) {
+            mAttached = false;
+            mLauncher.unregisterReceiver(mWallpaperChangeReceiver);
+        }
         mClient.onDetachedFromWindow();
+    }
+
+    private void onWallpaperChanged(Intent unusedBroadcastIntent) {
+        mClient.disconnect();
+        mClient.reconnect();
     }
 
     @Override
